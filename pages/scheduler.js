@@ -71,12 +71,10 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
     useEffect(() => {
         async function fetchHospitalsAndDepartments() {
           try {
-          
-            setHospitals(hospitalData);
     
             if (hospitalData.length > 0) {
               // Automatically set the departments for the first hospital
-              fetchDepartments(hospitalData[0].id);
+              fetchDepartments(hospitals[0].id);
             }
           } catch (error) {
             console.error('Error fetching hospitals or departments:', error);
