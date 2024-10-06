@@ -3,5 +3,6 @@ const nextConfig = {
 }
 
 module.exports = {
+  output: 'standalone',
   distDir: '.next',
 };
