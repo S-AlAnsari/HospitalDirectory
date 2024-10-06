@@ -5,12 +5,17 @@ export async function getServerSideProps() {
   const response = await fetch('http://localhost:3000/api/schedules'); // Use your actual API endpoint
   const schedules = await response.json();
   const response2 = await fetch('http://localhost:3000/api/users'); // Fetch user data from your API
+  const hospitalResponse = await fetch('http://localhost:3000/api/hospitals'); // Fetch hospitals
+  const hospitals = await hospitalResponse.json();
+  const departmentResponse = await fetch(`http://localhost:3000/api/departments`);
+  const departments = await departmentResponse.json();
+
     users = await response2.json(); // Parse the response as JSON
     console.log(users)
 
   return {
     props: {
-      schedules, users
+      schedules, users, hospitals, departments
     },
   };
 }
@@ -47,7 +52,7 @@ function filterUsers() {
     autocompleteList.appendChild(item);
   });
 }
-export default function Scheduler({ schedules, users}) {
+export default function Scheduler({ schedules, users, hospitals, departments}) {
     
     // Optional: Add any JavaScript logic (e.g., handling dates, input)
     
@@ -60,14 +65,13 @@ export default function Scheduler({ schedules, users}) {
     const [selectedDate, setSelectedDate] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true); 
     const [isFormDisabled, setFormDisabled] = useState(true);
-    const [hospitals, setHospitals] = useState([]);  // To store hospitals data
-    const [departments, setDepartments] = useState([]); // To store departments data
+    const [oldH, setHospitals] = useState([]);  // To store hospitals data
+    const [oldD, setDepartments] = useState([]); // To store departments data
     const [selectedHospital, setSelectedHospital] = useState(''); // Selected hospital
     useEffect(() => {
         async function fetchHospitalsAndDepartments() {
           try {
-            const hospitalResponse = await fetch('http://localhost:3000/api/hospitals'); // Fetch hospitals
-            const hospitalData = await hospitalResponse.json();
+          
             setHospitals(hospitalData);
     
             if (hospitalData.length > 0) {
@@ -85,8 +89,7 @@ export default function Scheduler({ schedules, users}) {
       // Fetch departments based on the selected hospital
       const fetchDepartments = async (hospitalId) => {
         try {
-          const departmentResponse = await fetch(`http://localhost:3000/api/departments?hospitalId=${hospitalId}`);
-          const departmentData = await departmentResponse.json();
+          let departmentData = departments.filter((department) => department.hospitalId == hospitalId);
           setDepartments(departmentData);
         } catch (error) {
           console.error('Error fetching departments:', error);
