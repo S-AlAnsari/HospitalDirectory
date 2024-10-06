@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Session Table</title>
+    <style>
+        body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  letter-spacing: 0.5px;
+  /* background-color: #74EBD5; */
+  /* background-image: linear-gradient(90deg, #9FACE6 0%, #74EBD5 100%); */
+  background-color: #f5f5f5;
+  color:rgb(24, 24, 24);
+
+
+
+
+}
+
+p {
+  font-size: large;
+}
+
+.list {
+  font-size: large;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 4px grey solid;
+  background-color: whitesmoke;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  margin: -0.5rem;
+}
+
+.nav h1 {
+  margin-left: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(71, 71, 71);
+
+}
+
+
+.nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin-left: auto;
+}
+
+.nav li {
+  margin: 1rem;
+}
+
+a:hover {
+  border-bottom: 2px rgb(0, 251, 251) solid;
+  transition: 0.25s;
+  color: grey;
+}
+
+  table {
+    border-collapse: collapse;
+    width: 80%;
+    margin:auto;
+    margin-top:5rem;
+
+  }
+
+  caption {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align:left
+  }
+
+  th,
+  td {
+    color:black;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    
+  }
+
+  th {
+    background-color: #f2f2f2;
+    
+  }
+  tr{
+    background-color: #f2f2f2;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2c2;
+  }
+  .dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: rgb(71, 71, 71);
+  padding: 16px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+    </style>
+  </head>
+  <body>
+    <nav>
+        <div class="nav">
+          <img src="./img/confplus.png" alt="" style="max-width:6rem;max-height:6rem">
+          <ul class="main-nav">
+            <li><a href="index.html">Home</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">Papers
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/submit-paper.html">Submit Papers</a>
+                  <a href="/my-papers.html">My Paper</a>
+                  <a href="/review-paper.html">Review Papers</a>
+                  <a href="/reviewed-papers.html">My Reviews</a>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Schedule
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/conference.html">Add/Edit Schedule</a>
+                  <a href="/schedule.html">Check Schedule</a>
+                </div>
+              </div>
+              <li><a href="/statistics.html">Statistics</a></li>
+            <li><a href="login.html" class="log" onclick="logout()"></a></li>
+          </ul>
+        </div>
+      </nav>
+    <h1 style="text-align: center;">Conference Schedules</h1>
+    <div id="schedules"></div>
+    <script>
+        async function getSchedules() {
+          const response = await fetch("/api/schedules");
+          const data = await response.json();
+          return data;
+        }
+  
+        async function load() {
+  const schedules = await getSchedules();
+  const div = document.getElementById("schedules");
+  schedules.forEach(async (schedule) => {
+    const table = document.createElement("table");
+    const caption = document.createElement("caption");
+    caption.textContent = schedule.name;
+    table.appendChild(caption);
+    const thead = document.createElement("thead");
+    const hr = document.createElement("tr");
+    const session = document.createElement("th");
+    session.textContent = "Session Name";
+    const title = document.createElement("th");
+    title.textContent = "Paper Title";
+    const start = document.createElement("th");
+    start.textContent = "Start Time";
+    const end = document.createElement("th");
+    end.textContent = "End Time";
+    const loc = document.createElement("th");
+    loc.textContent = "Location";
+    const date = document.createElement("th");
+    date.textContent = "Date";
+    hr.appendChild(session);
+    hr.appendChild(title);
+    hr.appendChild(start);
+    hr.appendChild(end);
+    hr.appendChild(loc);
+    hr.appendChild(date);
+    thead.appendChild(hr);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+  
+    await Promise.all( schedule.sessions.map(async (session) => {
+      const row = document.createElement("tr");
+      const title = document.createElement("td");
+      title.textContent = session.title;
+      const paper = document.createElement("td");
+      let pap = await fetch("/api/papers/" + session.paperId);
+      pap = await pap.json();
+      pap = pap[0];
+      let location = await fetch("/api/locations/" + session.locationId);
+        location = await location.json();
+        console.log(location)
+        let dat = await fetch("/api/dates/" + session.dateId);
+        dat = await dat.json();
+        dat = dat[0];
+      paper.textContent = pap.title;
+      const start = document.createElement("td");
+      start.textContent = session.startTime;
+      const end = document.createElement("td");
+      end.textContent = session.endTime;
+      const loc = document.createElement("td");
+      loc.textContent = location.name;
+      const date = document.createElement("td");
+const dateObj = new Date(dat.date);
+date.textContent = dateObj.toLocaleDateString("en-US", {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+row.appendChild(date);
+      row.appendChild(title);
+      row.appendChild(paper);
+      row.appendChild(start);
+      row.appendChild(end);
+      row.appendChild(loc);
+      row.appendChild(date);
+      tbody.appendChild(row);
+    }));
+    table.appendChild(tbody);
+
+    div.appendChild(table);
+  });
+
+}
+  
+        load();
+      </script>
+  </body>
+</html>

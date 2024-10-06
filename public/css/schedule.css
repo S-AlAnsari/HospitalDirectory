@@ -1,0 +1,97 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+  }
+  
+  .session {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }
+  
+  .session-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .session-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .session-location {
+    margin-right: 1rem;
+  }
+  
+  .paper {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    width: 100%;
+  }
+  
+  .paper-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .paper-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .paper-presenter {
+    margin-right: 1rem;
+  }
+  .dropdown {
+    float: left;
+    overflow: hidden;
+  }
+  
+  /* Dropdown button */
+  .dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: rgb(71, 71, 71);
+    padding: 16px 16px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }

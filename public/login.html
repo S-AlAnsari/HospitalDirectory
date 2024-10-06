@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="js/login.js"></script>
+  <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+  <main>
+    <nav>
+      <div class="nav">
+        <img src="./img/confplus.png" alt="" style="max-width:6rem;max-height:6rem">
+        <ul class="main-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="submit-paper.html">Submit Paper</a></li>
+          <li><a href="review-paper.html">Review Paper</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="login.html" onclick="">Login</a></li>
+
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="overlay" id="overlay">
+        <div class="login" id="login">
+          <h1>On Call Scheduler</h1>
+          <p>All the information are considered confidential.
+            <br />
+             <br />Please do not share with any foriegn parties.
+          </p>
+        </div>
+      </div>
+
+      <div class="form" id="form">
+        <div class="login">
+          <form id="login-form" class="login-form">
+            <h1>Login to Account</h1>
+            <br />
+            <br />
+            <label for="email" style="color: red" class="hidden" id="email-label">Email is incorrect <br /></label>
+            <br />
+            <input type="text" id="email" name="email" placeholder="Email" />
+            <!-- <br> -->
+            <br />
+            <label for="password" style="color: red" class="hidden" id="password-label">Password is incorrect
+              <br />
+            </label>
+            <input type="password" id="password" name="password" placeholder="Password" />
+
+            <br />
+            <button class="login-button up" type="button" onclick="checkLogin() ">
+              Sign in
+            </button>
+          </form>
+          <div class="spin hidden"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

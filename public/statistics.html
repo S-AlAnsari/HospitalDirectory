@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Conference Statistics</title>
+    <link rel="stylesheet" href="css/statistics.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />    <script>
+function showSection(sectionId) {
+  console.log(`Showing section ${sectionId}...`);
+  const section = document.getElementById(sectionId);
+  const previousSection = document.querySelector('section.show');
+  if (previousSection) {
+    previousSection.classList.remove('show');
+  }
+  if(sectionId = "paper-submissions"){
+    updateCounts();
+  }
+  if(sectionId = "average-authors"){
+    authors();
+  }
+  if(sectionId = "conference-sessions"){
+    sessions();
+  }
+  section.classList.add('show');
+
+    }
+    async function updateCounts() {
+  try {
+    const statuses = ['pending', 'accepted', 'rejected'];
+    const counts = {};
+    for (const status of statuses) {
+      const response = await fetch(`/api/papers?status=${status}`);
+      const count = await response.json();
+      // console.log(count);
+      // console.log(count);
+      counts[status] = count;
+    }
+    const pendingCountElement = document.querySelector('.pending-count');
+    const approvedCountElement = document.querySelector('.accepted-count');
+    const rejectedCountElement = document.querySelector('.rejected-count');
+    const submittedCountElement = document.querySelector('.submitted-count');
+    console.log(counts.pending);
+    pendingCountElement.textContent = counts.pending.length;
+    approvedCountElement.textContent = counts.accepted.length;
+    rejectedCountElement.textContent = counts.rejected.length;
+    submittedCountElement.textContent= counts.pending.length+counts.accepted.length+counts.rejected.length;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+    function generateReport() {
+      console.log('Generating report...');
+      const sectionSelect = document.getElementById('section-select');
+      const sectionId = sectionSelect.value;
+      const spinnerOverlay = document.getElementById('spinner-overlay');
+      const spinner = document.getElementById('spinner');
+      spinnerOverlay.style.display = 'block';
+      spinner.style.display = 'block';
+      const previousSection = document.querySelector('section.show');
+      if (previousSection) {
+        previousSection.classList.remove('show'); /* remove the show class */
+      }
+      setTimeout(() => {
+        spinnerOverlay.classList.add('hide');
+        setTimeout(() => {
+          spinnerOverlay.style.display = 'none';
+          spinner.style.display = 'none';
+          spinnerOverlay.classList.remove('hide');
+          showSection(sectionId);
+        }, 550);
+      }, 550);
+
+
+
+    // setTimeout(() => {
+    //   spinnerOverlay.style.display = 'none';
+    //   spinner.style.display = 'none';
+    //   showSection(sectionId);
+    // }, 500);
+  }
+  async function authors(){
+        try {
+          const response = await fetch(`/api/written/authors`);
+          const data = await response.json();
+    const averageAuthorsElement = document.querySelector('#author-count');
+    averageAuthorsElement.textContent = data._avg.authorId;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function sessions(){
+        try {
+          const response = await fetch(`/api/sessions/count`);
+          const data = await response.json();
+    const sessionsElement = document.querySelector('#test');
+    sessionsElement.textContent = `Number of Sessions: ${data}`;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      authors();
+      </script>
+    </head>
+    <body>
+      <nav>
+        <div class="nav">
+          <img src="./img/confplus.png" alt="" style="max-width:6rem;max-height:6rem">
+          <ul class="main-nav">
+            <li><a href="index.html">Home</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">Papers
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/submit-paper.html">Submit Papers</a>
+                  <a href="/my-papers.html">My Paper</a>
+                  <a href="/review-paper.html">Review Papers</a>
+                  <a href="/reviewed-papers.html">My Reviews</a>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Schedule
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/conference.html">Add/Edit Schedule</a>
+                  <a href="/schedule.html">Check Schedule</a>
+                </div>
+              </div>
+              <li><a href="/statistics.html">Statistics</a></li>
+            <li><a href="login.html" class="log" onclick="logout()"></a></li>
+          </ul>
+        </div>
+      </nav>
+      <h1>Conference Statistics</h1>
+      <label for="section-select">Select a section:</label>
+      <select id="section-select">
+        <option value="">-- Select a section --</option>
+        <option value="paper-submissions">Paper Submissions</option>
+        <option value="average-authors">Average Authors per Paper</option>
+        <option value="conference-sessions">Conference Sessions</option>
+      </select>
+      <button onclick="generateReport()">Generate Report</button>
+      <div id="spinner-overlay"  style="display: none;" >
+
+      <div id="spinner" style="display: none;">
+        <img src="https://cdn.dribbble.com/users/172519/screenshots/3520576/dribbble-spinner-800x600.gif" alt="Loading..." />
+      </div>
+      </div>
+      <div id="tester">
+      <section id="paper-submissions">
+        <h2>Paper Submissions</h2>
+        <ul>
+            <li id="submitted"><div style="display: flex; flex-direction: column; align-items: center;">
+                <i class="fas fa-file-pdf" style="margin:0.5rem; color:rgb(153, 1, 1);"></i>
+                <span style="margin-bottom:2rem;">Submitted</span>
+                <span class="submitted-count">0</span>
+              </div></li>
+              <hr>
+              <li id="pending"><div style="display: flex; flex-direction: column; align-items: center;">
+                <i class="fas fa-clock" style="margin:0.5rem; color:goldenrod;"></i>
+                <span style="margin-bottom:2rem;">Pending</span>
+                <span class="pending-count">0</span>
+              </div></li>
+              <hr>
+          <li id="accepted"><div style="display: flex; flex-direction: column; align-items: center;">
+            <i class="fas fa-check" style="margin:0.5rem; color:green;"></i>
+            <span style="margin-bottom:2rem;">Accepted</span>
+            <span class="accepted-count">0</span>
+          </div></li>
+          <hr>
+          <li id="rejected">    <div style="display: flex; flex-direction: column; align-items: center;">
+            <i class="fas fa-times" style="margin:0.5rem; color:rgb(165, 0, 0);"></i>
+            <span style="margin-bottom:2rem;">Rejected</span>
+            <span class="rejected-count">0</span>
+          </div></li>
+        </ul>
+      </section>
+      <section id="average-authors"  onload="authors()">
+        <h2>Average Authors per Paper</h2>
+        <p id="author-count"></p>
+      </section>
+      <section id="conference-sessions">
+        <h2>Conference Sessions</h2>
+        <ul>
+          <li id="test">Number of Sessions:</li>
+          <li>Average Presentations per Session: 1</li>
+        </ul>
+      </section>
+    </div>
+    </body>
+  </html>

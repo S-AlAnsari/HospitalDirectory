@@ -1,0 +1,200 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  #tester{
+    margin-bottom: 500px;
+  }
+  section {
+    position: absolute;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    left: 25%;
+    right: 25%;
+    /* top: 25%; */
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    /* margin: 20px auto; */
+    margin: auto;
+    margin-top:2rem;
+    margin-bottom:5rem;
+
+
+    /* max-width: 600px; */
+    min-width: 50rem;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+  }
+  section.show {
+    opacity: 1;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+  }
+  
+  li {
+    margin: 1rem;
+  }
+  
+  p {
+    margin: 1rem;
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  #spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    opacity: 0;
+    animation: fadeIn 0.25s ease-in-out forwards; /* add an animation */
+  }
+  
+  #spinner-overlay.hide {
+    animation: fadeOut 0.25s ease-in-out forwards; /* add an animation */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+
+  #spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    /* z-index: 9999; */
+    width: 8rem; /* change the width */
+    /* height: 10rem; change the height */
+    border-radius: 15%;
+  }
+  
+  #spinner img {
+    margin-top: auto;
+    max-width: 100%;
+    border-radius: 15%;
+
+  }
+  
+p {
+  font-size: large;
+}
+
+.list {
+  font-size: large;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 4px grey solid;
+  background-color: whitesmoke;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  margin: -0.5rem;
+}
+
+.nav h1 {
+  margin-left: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(71, 71, 71);
+
+}
+
+
+.nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin-left: auto;
+}
+
+.nav li {
+  margin: 1rem;
+}
+
+a:hover {
+  border-bottom: 2px rgb(0, 251, 251) solid;
+  transition: 0.25s;
+  color: grey;
+}
+  .dropdown {
+    float: left;
+    overflow: hidden;
+  }
+  
+  /* Dropdown button */
+  .dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: rgb(71, 71, 71);
+    padding: 16px 16px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }

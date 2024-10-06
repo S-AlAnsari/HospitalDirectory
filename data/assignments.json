@@ -1,0 +1,26 @@
+[
+    {
+      "scheduleId": 1,
+      "userId": 1,          
+      "departmentId": 1,    
+      "criteria": 1      
+    },
+    {
+      "scheduleId": 1,
+      "userId": 2,          
+      "departmentId": 2,    
+      "criteria": 2
+    },
+    {
+      "scheduleId": 1,
+      "userId": 3,          
+      "departmentId": 3,    
+      "criteria": 3
+    },
+    {
+      "scheduleId": 1,
+      "userId": 4,          
+      "departmentId": 4,   
+      "criteria": 1        
+    }
+]

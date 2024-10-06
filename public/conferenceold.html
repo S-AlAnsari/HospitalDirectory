@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Conference Schedule Editor</title>
+    <style>
+/* Style the form inputs */
+input[type="text"],
+select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Style the form buttons */
+button[type="submit"],
+button[type="button"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background-color: #45a049;
+}
+
+/* Style the form labels */
+label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+/* Style the time picker */
+input[type="time"] {
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+/* Style the time picker arrow */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background-color: #fff;
+  background-position: center;
+  background-size: 1em;
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: -1.5em;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+/* Style the time picker arrow on hover */
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+/* Style the form */
+#session-form {
+  max-width: 500px;
+  margin: 0 auto;
+
+}
+#sessions {
+  height: 100px;
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+ul {
+    list-style: none;
+    margin-top: 1rem;
+    padding: 0;
+
+  }
+  
+  li {
+    margin: 1rem;
+  }
+  
+  p {
+    margin: 1rem;
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    /* margin-top: 50px; */
+  }
+  p {
+  font-size: large;
+}
+
+.list {
+  font-size: large;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 4px grey solid;
+  background-color: whitesmoke;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  margin: -0.5rem;
+}
+
+.nav h1 {
+  margin-left: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(71, 71, 71);
+
+}
+
+
+.nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin-left: auto;
+}
+
+.nav li {
+  margin: 1rem;
+}
+
+a:hover {
+  border-bottom: 2px rgb(0, 251, 251) solid;
+  transition: 0.25s;
+  color: grey;
+}
+/* Style the view switcher container */
+#view-switcher {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Style the view switcher buttons */
+#view-switcher button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+/* Style the active view switcher button */
+#view-switcher button.active {
+  background-color: #fff;
+  color: #333;
+}
+/* Center the views */
+/* Center the views */
+#sessions-view,
+#schedule-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 10rem);
+}
+#session-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+
+}
+#schedule-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin-left:25%;
+    margin-right:25%;
+}
+button[type="submit"]{
+    margin-bottom:1rem;
+}
+/* Style the multi-line select element */
+select[multiple] {
+    width:100% !important;
+}
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: rgb(71, 71, 71);
+  padding: 16px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+      </style>
+  </head>
+  <body>
+    <nav>
+        <div class="nav">
+          <img src="./img/confplus.png" alt="" style="max-width:6rem;max-height:6rem">
+          <ul class="main-nav">
+            <li><a href="index.html">Home</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">Papers
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/submit-paper.html">Submit Papers</a>
+                  <a href="/my-papers.html">My Paper</a>
+                  <a href="/review-paper.html">Review Papers</a>
+                  <a href="/reviewed-papers.html">My Reviews</a>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Schedule
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/conference.html">Add/Edit Schedule</a>
+                  <a href="/schedule.html">Check Schedule</a>
+                </div>
+              </div>
+              <li><a href="/statistics.html">Statistics</a></li>
+            <li><a href="login.html" class="log" onclick="logout()"></a></li>
+          </ul>
+        </div>
+      </nav>
+    <div id="view-switcher">
+      <button id="sessions-button">Sessions</button>
+      <button id="schedule-button">Schedule</button>
+    </div>
+    <div id="sessions-view">
+      <h2 style="text-align: center;margin:2rem;">Create/Update Session</h2>
+      
+      <form id="session-form">
+        <label for="session-select">Select or create a session:</label>
+        <select id="session-select" name="session-select">
+          <option value="">-- Create new session --</option>
+        </select>
+        <input type="id" id="id" name="id" style="display:none"/>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required /><br />
+        <label for="location">Location:</label>
+        <select id="location" name="location" required></select><br />
+        <label for="date">Date:</label>
+        <select id="date" name="date" required></select><br />
+        <label for="from-time">From:</label>
+        <input type="time" id="from-time" name="from-time" required /><br />
+        <label for="to-time">To:</label>
+        <input type="time" id="to-time" name="to-time" required /><br />
+        <label for="papers">Paper:</label>
+        <select id="papers" name="papers" required></select><br />
+        <label for="presenter" style="display: block;">Presenter:</label>
+        <input type="text" id="presenter" name="presenter" value="" placeholder="John Doe" disabled /><br />
+        <button type="submit">Save</button>
+        <button type="button" id="cancel-button">Cancel</button>
+      </form>
+    </div>
+    <div id="schedule-view">
+      <h2  style="text-align: center;margin:2rem;">Schedule</h2>
+      <!-- <ul id="schedule-list"></ul> -->
+      <form id="schedule-form">
+        <label for="existing-schedules">Existing Schedules:</label>
+        <select id="existing-schedules" name="existing-schedules">
+          <option value="">--Create new Schedule--</option>
+        </select><br />
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required /><br />
+        <label for="sessions">Sessions:</label>
+        <select id="sessions" name="sessions" multiple required></select><br />
+        <button type="submit">Save</button>
+        <button type="button" id="cancel-button">Cancel</button>
+      </form>
+    </div>
+    <script src="js/conferenceold.js">
+    </script>
+  </body>
+</html>

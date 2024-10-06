@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  email      String  @unique
+  first_name String
+  last_name  String
+  password   String
+  phone      String  @default("0")
+  scheduleAssignments ScheduleAssignment[]
+}
+
+model Hospital {
+  id         Int     @id @default(autoincrement())
+  name String
+  departments Department[]
+}
+
+model Department {
+  id         Int     @id @default(autoincrement())
+  name String
+  hospitalId Int
+  scheduleAssignments ScheduleAssignment[]
+  hospital   Hospital @relation(fields: [hospitalId], references: [id])
+  
+}
+
+
+model Schedule {
+  id       Int       @id @default(autoincrement())
+  date     DateTime  @unique
+  assignments ScheduleAssignment[]
+}
+
+model ScheduleAssignment {
+  id           Int         @id @default(autoincrement())
+  criteria     Int         // Criteria can be 1, 2, or 3
+  
+  user         User        @relation(fields: [userId], references: [id])
+  userId       Int
+  
+  department   Department   @relation(fields: [departmentId], references: [id])
+  departmentId Int
+  
+  schedule     Schedule     @relation(fields: [scheduleId], references: [id])
+  scheduleId   Int
+
+  @@unique([scheduleId, userId, departmentId, criteria])  // Ensure each user is assigned only once to a department and criteria in the same schedule
+}
+
+// THIS IS TO USE DBDIAGRAM.IO TO CREATE THE RELATIONS IN A VISUAL WAY
+// DELETE BEFORE SUBMITTING
+// Table Users {
+//   id integer [primary key]
+//   email string
+//   first_name string
+//   last_name string
+//   password string
+//   role string
+// }
+
+// Table Papers {
+//   id integer [primary key]
+//   title string
+//   abstract string [note: 'Content of the post']
+//   presenter integer
+//   user integer
+//   reviewer integer
+// }
+// Table Author {
+//   id integer [primary key]
+//   email string unique
+//   first_name string
+//   last_name string
+//   paper_id integer
+//   affiliation integer
+// }
+// Table Institutions{
+//   id integer [primary key]
+//   name string
+// }
+
+// Ref: Papers.user > Users.id // many-to-one
+// Ref: Papers.reviewer > Users.id // many-to-one
+// Ref: Author.paper_id <> Papers.id // many-to-one
+// Ref: Author.affiliation > Institutions.id // many-to-one

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Schedule Editor</title>
+  <link rel="stylesheet" href="css/schedule.css" />
+</head>
+<body>
+  <h1>Schedule Editor</h1>
+  
+  <form id="schedule-form">
+    <fieldset>
+      <legend>Add/Edit Session</legend>
+      <label for="session-title">Title:</label>
+      <input type="text" id="session-title" name="session-title" required />
+      <label for="session-location">Location:</label>
+      <select id="session-location" name="session-location" required>
+        <option value="" disabled selected>Select a location</option>
+      </select>
+      <label for="session-date">Date:</label>
+      <select id="session-date" name="session-date" required>
+        <option value="" disabled selected>Select a date</option>
+      </select>
+      <button type="button" id="add-session-btn">Add Session</button>
+    </fieldset>
+    <fieldset id="update-delete-session-form">
+      <legend>Update/Delete Session</legend>
+      <label for="session-select">Session:</label>
+      <select id="session-select" name="session-select">
+        <option  value="" disabled selected>Select a session</option>
+      </select>
+      <label for="session-title-update">Title:</label>
+      <input type="text" id="session-title-update" name="session-title-update" required />
+      <label for="session-location-update">Location:</label>
+      <select id="session-location-update" name="session-location-update" required>
+        <option value="" disabled selected>Select a location</option>
+      </select>
+      <label for="session-date-update">Date:</label>
+      <select id="session-date-update" name="session-date-update" required>
+        <option value="" disabled selected>Select a date</option>
+      </select>
+      <button type="button" id="delete-session-btn">Delete Session</button>
+      <button type="button" id="update-session-btn">Update Session</button>
+    </fieldset>
+    <fieldset>
+      <legend>Assign Papers to Sessions</legend>
+      <label for="session-select2">Session:</label>
+      <select id="session-select2" name="session-select2">
+        <option  value="" disabled selected>Select a session</option>
+      </select>
+      <label for="paper-select">Paper:</label>
+      <select id="paper-select" name="paper-select">
+        <option value="" disabled selected>Select a paper</option>
+      </select>
+      <label for="presenter-select">Presenter:</label>
+      <select id="presenter-select" name="presenter-select">
+        <option value="" disabled selected>Select a presenter</option>
+      </select>
+      <label for="from-time">From Time:</label>
+      <input type="time" id="from-time" name="from-time" required />
+      <label for="to-time">To Time:</label>
+      <input type="time" id="to-time" name="to-time" required />
+      <button type="button" id="add-paper-btn">Add Paper to Session</button>
+    </fieldset><br>
+    <select id="session-select3" name="session-select3">
+      <option  value="" disabled selected>Select a session</option>
+    </select>
+    <button type="submit" id="save-schedule-btn">Save Schedule</button>
+  </form>
+  <h1>Display Schedules</h1>
+  <label for="date-select">select a confrence date:</label>
+      <select id="date-select" name="date-select">
+        <option value="" disabled selected>Select a date</option>
+      </select>
+  <select id="schedule-select" name="schedule-select">
+  </select>
+  <script src="js/schedule.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+        async function logout() {
+            localStorage.clear();
+        }
+        function checkLogin() {
+            let loginLink = document.querySelector(".log");
+            if (localStorage.getItem("user") === null) {
+                loginLink.innerHTML = "Login"
+            } else {
+                loginLink.innerHTML = "Logout"
+            }
+        }
+    </script>
+</head>
+
+<body onload="checkLogin()">
+    <main>
+        <nav>
+            <div class="nav">
+              <img src="./img/confplus.png" alt="" style="max-width:6rem;max-height:6rem">
+              <ul class="main-nav">
+                <li><a href="index.html">Home</a></li>
+                <div class="dropdown">
+                    <button class="dropbtn">Papers
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                      <a href="/submit-paper.html">Submit Papers</a>
+                      <a href="/my-papers.html">My Paper</a>
+                      <a href="/review-paper.html">Review Papers</a>
+                      <a href="/reviewed-papers.html">My Reviews</a>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <button class="dropbtn">Schedule
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                      <a href="/conference.html">Add/Edit Schedule</a>
+                      <a href="/schedule.html">Check Schedule</a>
+                    </div>
+                  </div>
+                  <li><a href="/statistics.html">Statistics</a></li>
+                <li><a href="login.html" class="log" onclick="logout()"></a></li>
+              </ul>
+            </div>
+          </nav>
+        <div class="banner">
+            <h1>Welcome to ConfPlus!<br> The future of Web Conferencing</h1>
+        </div>
+
+        <div class="words">
+            <div class="content">
+                <h2>Our Aim</h2>
+                <p>Our aim of this web conference app is to help aid the communication between individuals, assist in
+                    the means of collaboration, and connect users together in one platform to give papers that highly
+                    contribute to our society the spotlight. While also allowing different authors to submit their ideas
+                    for helping man-kind. And we give the opportunity to highly trusted individuals to rate the
+                    different papers based on the contribution and quality of the content. By doing all of the above, we
+                    create a lovely environment with ease of use.</p>
+
+                <h2>Our Vision</h2>
+                <p>Our vision of our web conference app is to lead the web conferencing market around the world to help
+                    create a friendly and easy environment, while giving all papers a fair chance to shed the light on
+                    the different topics and cases that affect us on a daily basis. This allows for a competitive
+                    platform that helps keep papers of high quality and help them to further contribute to society. We
+                    also want to enhance the user experience and act as a helping hand to individuals that are seeking
+                    help with research</p>
+                <h2>Our Accomplishments</h2>
+                <p>Our community have accomplished many things while using our platform.</p>
+                <ul class="list">
+                    <li>Launched a fundraiser that raised QAR 100,000,000 to charity.</li>
+                    <br>
+                    <li>Helped reduce carbon emissions.</li>
+                    <br>
+                    <li>Brought many different communities together.</li>
+                    <br>
+                    <li>Gave every author fairness in reviewing their papers</li>
+                </ul>
+            </div>
+            <aside>
+
+                <div class="contents" style="height:10vh">
+                    <h2>Developed Using The Following:</h2>
+                </div>
+                <div class="contents">
+
+                    <div>
+                        <img src="img/html.png" alt="" style="width:20vh;">
+                        <img src="img/css.png" alt="" style="width:15vh;">
+                        <img src="img/js.png" alt="" style="width:20vh;">
+                        <img src="img/next.png" alt="" style="width:20vh;">
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p> <b>Copyright @ 2023 | Developed by Salem Al-Ansari and Moadh Ben Abderrahim</b></p>
+
+        </div>
+    </footer>
+</body>
+
+</html>

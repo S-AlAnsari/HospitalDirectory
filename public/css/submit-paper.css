@@ -1,0 +1,400 @@
+* {
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+body {
+    background-color: #f1f1f1;
+    background-color: #74ebd5;
+    background-image: linear-gradient(90deg, #9face6 0%, #74ebd5 100%);
+}
+
+#submit-paper {
+    background-color: #ffffff;
+    /* margin: 100px auto; */
+    /* margin-top: 2rem; */
+    font-family: Raleway;
+    padding: 40px;
+    width: 100%;
+    min-width: 300px;
+    border-radius: 15px;
+}
+
+#submit-paper h1 {
+    color: rgba(159, 183, 222);
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: rgba(226, 150, 217);
+}
+
+#submit-paper {
+    color: grey;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    /* width:75%; */
+    /* margin-left:12.5%;
+        margin-right:12.5%;
+        margin-bottom: 12.5%; */
+    margin: auto;
+    margin-top: 1rem;
+    box-shadow: 4px 12px 52px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    max-width: 50%;
+}
+
+.progress-bar {
+    display: flex;
+    gap: 1.5rem;
+    width: 75%;
+    margin: auto;
+    margin-top: 1rem;
+    /* width:75%; */
+    /* margin-left:12.5%;
+        margin-right:12.5%;
+        margin-bottom: 12.5%; */
+    /* margin:12.5%; */
+    box-shadow: 4px 12px 52px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    background-color: whitesmoke;
+    max-width: 50%;
+
+
+}
+
+h1 {
+    text-align: center;
+}
+
+input {
+    padding: 10px;
+    margin-top: 1rem;
+    width: 100%;
+    font-size: 17px;
+    font-family: Raleway;
+    border: 1px solid #aaaaaa;
+    margin-bottom: 1rem;
+}
+
+#abstract {
+    width: 100%;
+    height: 10rem;
+    margin-top: 1rem;
+    font-family: Raleway;
+    border: 1px solid #aaaaaa;
+    resize: none;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+    background-color: #ffdddd;
+}
+
+.invalid {
+    background-color: #ffdddd;
+    animation: invalid 0.5s linear forwards;
+}
+
+/* Hide all steps by default: */
+.tab {
+    display: none;
+}
+
+button {
+    background-color: lightblue;
+    border-radius: 5px;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-family: Raleway;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+#prevBtn {
+    background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+    width: 33%;
+    color: grey;
+    padding-bottom: 0.5rem;
+    border-bottom: 6px solid grey;
+    text-align: start;
+    margin: auto;
+    opacity: 0.5;
+    transition: 0.5s;
+    border-radius: 5px;
+
+    /* margin: auto;
+        height: 30px;
+        width: 30px; */
+    /* margin: 0 2px; */
+    /* background-color: #bbbbbb;
+        border: none; */
+    /* border-radius: 50%; */
+    /* display: flex;
+        flex-direction: row; */
+    /* padding-top: 0.25rem; */
+    /* justify-content: center;
+        align-items: center;
+        opacity: 0.5;
+        margin-right: 4rem;
+        text-align: center; */
+}
+
+.step,
+p {
+    padding-top: 1rem;
+    font-family: Raleway;
+
+}
+
+.step.active {
+    opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+    opacity: 1;
+    /* background-color: blue; */
+    color: rgb(8, 165, 8);
+    border-color: rgb(8, 165, 8);
+}
+
+.info {
+    display: flex;
+}
+
+.animate {
+    animation: appear 0.25s forwards;
+}
+
+.add-author {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 1rem;
+}
+
+.add-author button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin:auto; */
+    height: 2rem;
+    width: 2rem;
+}
+
+#add {
+    background-color: rgb(75, 177, 15);
+}
+
+#delete {
+    background-color: orangered;
+}
+
+#authors fieldset {
+    margin-top: 1rem;
+    border-radius: 15px;
+    color: rgb(170, 170, 170);
+    border-color: rgba(170, 170, 170, 0.25);
+}
+
+.spin::before {
+    /* display:none */
+    animation: 1.5s linear infinite spinner;
+    animation-play-state: inherit;
+    border: solid 10px #cfd0d1;
+    border-bottom-color: #b6a3fd;
+    border-radius: 50%;
+    content: "";
+    height: 80px;
+    width: 80px;
+    margin-left: 50%;
+    position: absolute;
+    top: 55%;
+    left: 0;
+    right: 0;
+    transform: translate3d(-50%, -50%, 0);
+    will-change: transform;
+    margin-top: -8rem;
+}
+
+.spin {
+    transition: opacity 1s;
+    margin-bottom: 8rem;
+
+}
+
+.back {
+    width: 160px;
+    height: 160px;
+    background-color: whitesmoke;
+    box-shadow: 4px 12px 52px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s;
+    display: none;
+
+}
+
+.check {
+    display: inline-block;
+    content: "";
+    height: 80px;
+    width: 45px;
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 50%; */
+    will-change: transform;
+    /* margin-top: -12rem; */
+    margin-left: 50%;
+    transform: rotate(45deg);
+    border-bottom: 20px solid #78b13f;
+    border-right: 20px solid #78b13f;
+    /* top: 50%; */
+    /* left: 50%; */
+    animation: 0.5s linear appear;
+    transition: opacity 0.25s;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        margin-right: 100%;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes invalid {
+    0% {
+        background-color: #ffdddd;
+    }
+
+    25% {
+        background-color: #ffffff;
+    }
+
+    50% {
+        background-color: #ffdddd;
+    }
+
+    75% {
+        background-color: #ffffff;
+    }
+
+    100% {
+        background-color: #ffdddd;
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 4px grey solid;
+    background-color: whitesmoke;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    margin: -0.5rem;
+}
+
+.nav h1 {
+    margin-left: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(71, 71, 71);
+
+}
+
+
+ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin-left: auto;
+    margin: auto;
+}
+
+li {
+    margin: 1rem;
+}
+
+a:hover {
+    border-bottom: 2px rgb(0, 251, 251) solid;
+    transition: 0.25s;
+    color: grey;
+}
+
+@media screen and (max-width:768px) {
+    .progress-bar {
+        display: flex;
+        font-size: xx-small;
+        justify-content: center;
+        flex-direction: column;
+        width: 50vh;
+
+    }
+
+    #submit-paper {
+        width: 50vh;
+        margin: 0;
+    }
+
+    .container {
+        margin: 0;
+        margin-top: 2rem;
+    }
+
+    .step {
+        width: 100%;
+    }
+
+    fieldset {
+        width: 1vh;
+    }
+
+    ul {
+        flex-direction: column;
+        margin: auto;
+    }
+
+}
+
+@media screen and (max-width:1024px) {
+    .progress-bar {
+        font-size: small;
+    }
+}

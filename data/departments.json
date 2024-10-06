@@ -1,0 +1,67 @@
+[
+    {
+        "id":           1,
+        "name":         "Infectious Diseases",
+        "hospitalId":   1
+    },
+    {
+        "id":           2,
+        "name":         "General Surgery",
+        "hospitalId":   1
+    },
+    {
+        "id":           3,
+        "name":         "Cardiology",
+        "hospitalId":   1
+    },
+    {
+        "id":           4,
+        "name":         "Emergency Medicine",
+        "hospitalId":   1
+    },
+    {
+        "id":           5,
+        "name":         "Infectious Diseases",
+        "hospitalId":   2
+    },
+    {
+        "id":           6,
+        "name":         "General Surgery",
+        "hospitalId":   2
+    },
+    {
+        "id":           7,
+        "name":         "Neurology",
+        "hospitalId":   2
+    },
+    {
+        "id":           8,
+        "name":         "Radiology",
+        "hospitalId":   2
+    },
+    {
+        "id":           9,
+        "name":         "Cardiology",
+        "hospitalId":   2
+    },
+    {
+        "id":           11,
+        "name":         "General Surgery",
+        "hospitalId":   3
+    },
+    {
+        "id":           12,
+        "name":         "Oncology",
+        "hospitalId":   3
+    },
+    {
+        "id":           13,
+        "name":         "Infectious Diseases",
+        "hospitalId":   4
+    },
+    {
+        "id":           14,
+        "name":         "General Surgery",
+        "hospitalId":   4
+    }
+]

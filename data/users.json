@@ -1,0 +1,44 @@
+[
+      {
+        "id": 0,
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "admin@admin.com",
+        "password": "admin",
+        "phone": "0"
+      },
+      {
+        "id": 1,
+        "first_name": "Brennan",
+        "last_name": "Crosby",
+        "email": "brennan@email.com",
+        "password": "123",
+        "phone": "55555555"
+      },
+      {
+        "id": 2,
+        "first_name": "Grace",
+        "last_name": "Brandt",
+        "email": "grace@email.com",
+        "password": "123",
+        "phone": "66666666"
+      },
+      {
+        "id": 3,
+        "first_name": "Jaylee",
+        "last_name": "Wise",
+        "email": "jaylee@email.com",
+        "password": "123",
+        "phone": "77777777"
+      },
+      {
+        "id": 4,
+        "first_name": "Talon",
+        "last_name": "Peters",
+        "email": "talon@email.com",
+        "password": "123",
+        "phone": "88888888"
+      }
+]
+
+  

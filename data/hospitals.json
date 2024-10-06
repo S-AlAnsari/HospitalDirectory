@@ -1,0 +1,23 @@
+[
+    {
+        "id":   1,
+        "name": "Al-Wakrah Hospital"
+    },
+    {
+        "id":   2,
+        "name": "Hamad General Hospital"
+    },
+    {
+        "id":   3,
+        "name": "Rumailah Hospital"
+    },
+    
+    {
+        "id":   4,
+        "name": "Al-Khor Hospital"
+    },
+    {
+        "id":   5,
+        "name": "Heart Hospital"
+    }
+]
