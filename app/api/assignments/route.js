@@ -10,4 +10,11 @@ export async function GET(request) {
     assignments = await repo.getAssignments();
   }
   return Response.json(assignments);
+  
+}
+
+export async function PUT(request) {
+  const schedule = await request.json();
+  const newSchedule = await repo.updateSchedule(schedule);
+  return Response.json(newSchedule);
 }

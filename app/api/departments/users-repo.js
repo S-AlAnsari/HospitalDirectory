@@ -7,7 +7,11 @@ export default class UsersRepo {
     constructor() {}
     async getHospitals() {
       try {
-        return await prisma.department.findMany();
+        return await prisma.department.findMany({
+          include: {
+            hospital: true
+          }
+        });
       } catch (error) {
         console.error(error);
         process.exit(1);
@@ -18,6 +22,10 @@ export default class UsersRepo {
         return await prisma.department.findMany({
           where: {
             hospitalId: +id,
+          },
+          
+          include: {
+            hospital: true
           }
         });
       } catch (error) {

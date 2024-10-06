@@ -53,7 +53,7 @@ function filterUsers() {
   });
 }
 export default function Scheduler({ schedules, users, hospitals, departments}) {
-    
+    let scheduleId;
     // Optional: Add any JavaScript logic (e.g., handling dates, input)
     
     // Update minimum date for the date picker dynamically
@@ -66,8 +66,10 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true); 
     const [isFormDisabled, setFormDisabled] = useState(true);
     const [oldH, setHospitals] = useState([]);  // To store hospitals data
-    const [oldD, setDepartments] = useState([]); // To store departments data
+    const [filteredDepartments, setDepartments] = useState([]); // To store departments data
     const [selectedHospital, setSelectedHospital] = useState(''); // Selected hospital
+    const [selectedSchedule, setSchedule] = useState(); // Selected hospital
+
     useEffect(() => {
         async function fetchHospitalsAndDepartments() {
           try {
@@ -75,6 +77,7 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
             if (hospitals.length > 0) {
               // Automatically set the departments for the first hospital
               fetchDepartments(hospitals[0].id);
+              setSelectedHospital(hospitals[0].id);
             }
           } catch (error) {
             console.error('Error fetching hospitals or departments:', error);
@@ -88,7 +91,12 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
       const fetchDepartments = async (hospitalId) => {
         try {
           let departmentData = departments.filter((department) => department.hospitalId == hospitalId);
+          console.log(departmentData)
           setDepartments(departmentData);
+          console.log(scheduleId);
+          if(scheduleId != undefined){
+            console.log("Hello!!!!");
+          }
         } catch (error) {
           console.error('Error fetching departments:', error);
         }
@@ -98,18 +106,19 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
       const handleHospitalChange = (event) => {
         const hospitalId = event.target.value;
         setSelectedHospital(hospitalId);
-    
         // Fetch and populate departments for the selected hospital
         fetchDepartments(hospitalId);
       };
     
     const handleDateChange = (event) => {
         const selectedDateValue = event.target.value;
-        setSelectedDate(selectedDateValue);
+        console.log(event.target);
+        let d = new Date(selectedDateValue);
+        setSelectedDate(d.toISOString());
         // Your function logic here
-        console.log('Date selected:', selectedDateValue);
+        console.log('Date selected:', d.toISOString());
         // Call any function when date is selected
-        dateChecker(selectedDateValue);
+        dateChecker(d.toISOString());
       };
     
       const dateChecker = (date) => {
@@ -117,6 +126,9 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
         if(schedules.some(schedule => schedule.date === date)){
             setIsButtonDisabled(true); // Enable button if date exists
             setFormDisabled(false);
+            scheduleId = schedules.filter(schedule => schedule.date === date)[0].id
+            setSchedule(scheduleId)
+            console.log(scheduleId);
         } else {
           setIsButtonDisabled(false); // Disable button if date does not exist
           setFormDisabled(true);
@@ -125,13 +137,82 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
         // Your logic here
       };
     const saveSchedule = () => {
-      // Save schedule logic here
-      console.log('Schedule saved!');
-    };
+      let onCallOne = document.getElementById("employee-name-1").classList.value;
+      let onCallTwo = document.getElementById("employee-name-2").classList.value;
+      let consultant = document.getElementById("employee-name-3").classList.value;
+      let deptId = document.getElementById("department").value;
+      let dept = departments.filter((department) => department.id == deptId);
+      let sched = schedules.filter((schedule) => schedule.id == selectedSchedule);
+      console.log(deptId);
+      console.log("Sched "+selectedSchedule);
+      console.log(onCallOne);
+      let dataOne = {
+        criteria: 1,
+        userId: parseInt(onCallOne),
+          departmentId: parseInt(deptId),
+          scheduleId: parseInt(selectedSchedule)
+      }
+        let dataTwo = {
+          criteria: 2,
+          userId: parseInt(onCallTwo),
+          departmentId: parseInt(deptId),
+          scheduleId: parseInt(selectedSchedule)
+  
+        }
+        let dataThree = {
+          criteria: 3,
+          userId: parseInt(consultant),
+          departmentId: parseInt(deptId),
+          scheduleId: parseInt(selectedSchedule)
+        }
+        let putData = [dataOne,dataTwo,dataThree];
+        putData.forEach((doctor) => 
+          fetch('/api/assignments', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(doctor),
+          })
+          .then(response => response.json())
+          .then(data => {
+    
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert('There was an error saving the schedule');
+          })
+        )
+        alert('Schedule Saved!');
+
+      }
+
+     
 
     const createSchedule = () => {
         setIsButtonDisabled(true); 
         setFormDisabled(false);
+        console.log(selectedDate);
+
+        const scheduleData = {
+          date:  selectedDate ,
+        };
+      
+        fetch('/api/schedules', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(scheduleData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert('Schedule saved successfully');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          alert('There was an error saving the schedule');
+        });
     }
 
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -162,7 +243,9 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
         // Add click event to autocomplete item
         item.addEventListener('click', function () {
             employeeField.value = user.id + " | "+ user.first_name + " " + user.last_name + " | +974 " + user.phone; // Set input value to the selected user
-          autocompleteList.innerHTML = ''; // Clear the autocomplete list
+            employeeField.classList.add(user.id);      
+            console.log(employeeField.classList.value); 
+            autocompleteList.innerHTML = ''; // Clear the autocomplete list
         });
   
         // Append the item to the autocomplete list
@@ -200,7 +283,7 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
           <div className="form-group"style={{flex:1, minWidth:"20rem"}} >
           <label htmlFor="department">Select Department:</label>
             <select id="department" disabled={isFormDisabled}>
-              {departments.map(department => (
+              {filteredDepartments.map(department => (
                 <option key={department.id} value={department.id}>
                   {department.name}
                 </option>
@@ -252,7 +335,7 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
            </div>
    
            <div className="form-group">
-             <input type="text" id="employee-name-3" placeholder="Employee Information" disabled />
+             <input type="text" id="employee-name-3" placeholder="Employee Information" className="" disabled />
            </div>
            </div>
            

@@ -63,7 +63,7 @@ export async function getServerSideProps({ params }) {
             </div>
     <div id="papers" className="paper-container">
           {departments.map((department) => (
-            <div key={department.id} className="card" onClick={() => (location.href = `/hospitals/`)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', textAlign: 'center' }}>
+            <div key={department.id} className="card" onClick={() => (location.href = `/assignments/${department.id}`)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', textAlign: 'center' }}>
               <h1>{department.name}</h1>
             </div>
           ))}

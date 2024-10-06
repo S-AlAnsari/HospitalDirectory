@@ -4,7 +4,6 @@ export async function getServerSideProps({ params }) {
     const { scheduleId } = params; // Get the hospital ID from the URL parameters
     const response = await fetch(`http://localhost:3000/api/assignments?departmentId=${scheduleId}`); // Fetch hospital details from your API
     const assignments = await response.json();
-    id = scheduleId;
     // Handle case when hospital is not found
     if (!assignments) {
       return {
@@ -71,7 +70,7 @@ export async function getServerSideProps({ params }) {
       </div>
     </nav>
     <h1>Search by Hospital</h1>
-    <div className="card" onClick={() => (location.href = `/hospitals/${id}`)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', textAlign: 'center', maxWidth: "2.5rem", minWidth: "2.5rem", maxHeight:"2.5rem", minHeight:"2.5rem"}}>
+    <div className="card" onClick={() => (location.href = `/hospitals/${assignments[0] ? assignments[0].department.hospitalId : ""}`)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', textAlign: 'center', maxWidth: "2.5rem", minWidth: "2.5rem", maxHeight:"2.5rem", minHeight:"2.5rem"}}>
     <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
             </div>
     <div id="papers" className="paper-container">
