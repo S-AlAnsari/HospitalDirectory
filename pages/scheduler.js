@@ -72,7 +72,7 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
         async function fetchHospitalsAndDepartments() {
           try {
     
-            if (hospitalData.length > 0) {
+            if (hospitals.length > 0) {
               // Automatically set the departments for the first hospital
               fetchDepartments(hospitals[0].id);
             }
