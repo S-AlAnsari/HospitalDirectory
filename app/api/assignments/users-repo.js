@@ -9,7 +9,8 @@ export default class UsersRepo {
       try {
         return await prisma.scheduleAssignment.findMany({
          include: {
-          department: true
+          department: true,
+          user:true
          }
         });
       } catch (error) {

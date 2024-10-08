@@ -9,13 +9,14 @@ export async function getServerSideProps() {
   const hospitals = await hospitalResponse.json();
   const departmentResponse = await fetch(`http://localhost:3000/api/departments`);
   const departments = await departmentResponse.json();
-
+  const assignmentsResponse = await fetch(`http://localhost:3000/api/assignments`);
+  const assignments = await assignmentsResponse.json();
     users = await response2.json(); // Parse the response as JSON
     console.log(users)
 
   return {
     props: {
-      schedules, users, hospitals, departments
+      schedules, users, hospitals, departments, assignments
     },
   };
 }
@@ -52,7 +53,7 @@ function filterUsers() {
     autocompleteList.appendChild(item);
   });
 }
-export default function Scheduler({ schedules, users, hospitals, departments}) {
+export default function Scheduler({ schedules, users, hospitals, departments, assignments}) {
     let scheduleId;
     // Optional: Add any JavaScript logic (e.g., handling dates, input)
     
@@ -120,7 +121,22 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
         // Call any function when date is selected
         dateChecker(d.toISOString());
       };
-    
+    const handleDataFill = (scheduleId) => {
+      [1,2,3].forEach((num) =>{
+        document.getElementById("employee-name-"+num).classList.value = "";
+        document.getElementById("employee-name-"+num).value = "";
+
+    });
+
+      let deptId = document.getElementById("department").value;
+      let dataFill = assignments.filter((assignment) => assignment.departmentId == deptId && assignment.scheduleId == (scheduleId ? scheduleId : selectedSchedule));
+      dataFill.forEach((assignment) => {
+          document.getElementById("employee-name-"+assignment.criteria).classList.value = (assignment.userId);
+          document.getElementById("employee-name-"+assignment.criteria).value = "#"+assignment.userId+" | "+assignment.user.first_name + " " + assignment.user.last_name +" | " +"+974 "+assignment.user.phone;
+    });
+    console.log(scheduleId ? ("Sched")+scheduleId : ("Ule")+selectedSchedule);
+
+    }
       const dateChecker = (date) => {
         console.log(`Function called with date: ${date}`);
         if(schedules.some(schedule => schedule.date === date)){
@@ -129,6 +145,7 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
             scheduleId = schedules.filter(schedule => schedule.date === date)[0].id
             setSchedule(scheduleId)
             console.log(scheduleId);
+            handleDataFill(scheduleId);
         } else {
           setIsButtonDisabled(false); // Disable button if date does not exist
           setFormDisabled(true);
@@ -216,7 +233,7 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
     }
 
     const [filteredUsers, setFilteredUsers] = useState([]);
-
+    const handleDeptChange = () => handleDataFill(selectedSchedule);
     function filterUsers(inputElementId, autocompleteListId, employeeFieldId) {
         const input = document.getElementById(inputElementId).value.toLowerCase();
         const autocompleteList = document.getElementById(autocompleteListId);
@@ -238,12 +255,12 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
       matchedUsers.forEach(user => {
         const item = document.createElement('div');
         item.textContent = user.id + " | "+ user.first_name + " " + user.last_name;
-        item.classList.add('autocomplete-item');
+        item.classList.value = ('autocomplete-item');
   
         // Add click event to autocomplete item
         item.addEventListener('click', function () {
             employeeField.value = user.id + " | "+ user.first_name + " " + user.last_name + " | +974 " + user.phone; // Set input value to the selected user
-            employeeField.classList.add(user.id);      
+            employeeField.classList.value = (user.id);      
             console.log(employeeField.classList.value); 
             autocompleteList.innerHTML = ''; // Clear the autocomplete list
         });
@@ -282,7 +299,7 @@ export default function Scheduler({ schedules, users, hospitals, departments}) {
   
           <div className="form-group"style={{flex:1, minWidth:"20rem"}} >
           <label htmlFor="department">Select Department:</label>
-            <select id="department" disabled={isFormDisabled}>
+            <select id="department" disabled={isFormDisabled} onChange={handleDeptChange}>
               {filteredDepartments.map(department => (
                 <option key={department.id} value={department.id}>
                   {department.name}

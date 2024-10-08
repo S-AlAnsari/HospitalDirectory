@@ -10,6 +10,34 @@ export async function GET(request) {
     assignments = await repo.getAssignments();
   }
   return Response.json(assignments);
+  // const { searchParams } = new URL(request.url);
+
+  // // Extract query parameters
+  // const departmentId = searchParams.get('departmentId');
+  // const userId = searchParams.get('userId');
+  // const scheduleId = searchParams.get('scheduleId');
+
+  // try {
+  //     // Perform search based on provided parameters
+  //     const scheduleAssignments = await prisma.scheduleAssignment.findMany({
+  //         where: {
+  //             userId: userId ? Number(userId) : undefined,
+  //             departmentId: departmentId ? Number(departmentId) : undefined,
+  //             scheduleId: scheduleId ? Number(scheduleId) : undefined
+  //         }
+  //     });
+
+  //     // Return the response as JSON
+  //     return new Response(JSON.stringify(scheduleAssignments), {
+  //         status: 200,
+  //         headers: { 'Content-Type': 'application/json' }
+  //     });
+  // } catch (error) {
+  //     return new Response(JSON.stringify({ error: error.message }), {
+  //         status: 500,
+  //         headers: { 'Content-Type': 'application/json' }
+  //     });
+  // }
   
 }
 
