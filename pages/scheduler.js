@@ -70,6 +70,10 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
     const [filteredDepartments, setDepartments] = useState([]); // To store departments data
     const [selectedHospital, setSelectedHospital] = useState(''); // Selected hospital
     const [selectedSchedule, setSchedule] = useState(); // Selected hospital
+    const [updatedSchedules, setSchedules] = useState(schedules); // Selected hospital
+    const [updatedAssignemnts, setAssignments] = useState(assignments); // Selected hospital
+
+
 
     useEffect(() => {
         async function fetchHospitalsAndDepartments() {
@@ -124,14 +128,16 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
     const handleDataFill = (scheduleId) => {
       [1,2,3].forEach((num) =>{
         document.getElementById("employee-name-"+num).classList.value = "";
+        document.getElementById("search-id-"+num).classList.value = "";
         document.getElementById("employee-name-"+num).value = "";
 
     });
 
       let deptId = document.getElementById("department").value;
-      let dataFill = assignments.filter((assignment) => assignment.departmentId == deptId && assignment.scheduleId == (scheduleId ? scheduleId : selectedSchedule));
+      let dataFill = updatedAssignemnts.filter((assignment) => assignment.departmentId == deptId && assignment.scheduleId == (scheduleId ? scheduleId : selectedSchedule));
       dataFill.forEach((assignment) => {
           document.getElementById("employee-name-"+assignment.criteria).classList.value = (assignment.userId);
+          document.getElementById("search-id-"+assignment.criteria).classList.value = assignment.id;
           document.getElementById("employee-name-"+assignment.criteria).value = "#"+assignment.userId+" | "+assignment.user.first_name + " " + assignment.user.last_name +" | " +"+974 "+assignment.user.phone;
     });
     console.log(scheduleId ? ("Sched")+scheduleId : ("Ule")+selectedSchedule);
@@ -139,10 +145,10 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
     }
       const dateChecker = (date) => {
         console.log(`Function called with date: ${date}`);
-        if(schedules.some(schedule => schedule.date === date)){
+        if(updatedSchedules.some(schedule => schedule.date === date)){
             setIsButtonDisabled(true); // Enable button if date exists
             setFormDisabled(false);
-            scheduleId = schedules.filter(schedule => schedule.date === date)[0].id
+            scheduleId = updatedSchedules.filter(schedule => schedule.date === date)[0].id
             setSchedule(scheduleId)
             console.log(scheduleId);
             handleDataFill(scheduleId);
@@ -157,56 +163,87 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
       let onCallOne = document.getElementById("employee-name-1").classList.value;
       let onCallTwo = document.getElementById("employee-name-2").classList.value;
       let consultant = document.getElementById("employee-name-3").classList.value;
+      let onCallOneId = document.getElementById("search-id-1").classList.value;
+      let onCallTwoId = document.getElementById("search-id-2").classList.value;
+      let consultantId = document.getElementById("search-id-3").classList.value;
       let deptId = document.getElementById("department").value;
       let dept = departments.filter((department) => department.id == deptId);
-      let sched = schedules.filter((schedule) => schedule.id == selectedSchedule);
+      let sched = updatedSchedules.filter((schedule) => schedule.id == selectedSchedule);
       console.log(deptId);
       console.log("Sched "+selectedSchedule);
       console.log(onCallOne);
-      let dataOne = {
-        criteria: 1,
-        userId: parseInt(onCallOne),
-          departmentId: parseInt(deptId),
-          scheduleId: parseInt(selectedSchedule)
-      }
-        let dataTwo = {
-          criteria: 2,
-          userId: parseInt(onCallTwo),
-          departmentId: parseInt(deptId),
-          scheduleId: parseInt(selectedSchedule)
-  
+      let dataOne, dataTwo, dataThree;
+      if(onCallOneId){
+        dataOne = {
+          id: parseInt(onCallOneId),
+          criteria: 1,
+          userId: parseInt(onCallOne),
+            departmentId: parseInt(deptId),
+            scheduleId: parseInt(selectedSchedule)
         }
-        let dataThree = {
-          criteria: 3,
-          userId: parseInt(consultant),
-          departmentId: parseInt(deptId),
-          scheduleId: parseInt(selectedSchedule)
-        }
-        let putData = [dataOne,dataTwo,dataThree];
-        putData.forEach((doctor) => 
-          fetch('/api/assignments', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(doctor),
-          })
-          .then(response => response.json())
-          .then(data => {
+          dataTwo = {
+            id: parseInt(onCallTwoId),
+            criteria: 2,
+            userId: parseInt(onCallTwo),
+            departmentId: parseInt(deptId),
+            scheduleId: parseInt(selectedSchedule)
     
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-            alert('There was an error saving the schedule');
-          })
-        )
-        alert('Schedule Saved!');
+          }
+          dataThree = {
+            id: parseInt(consultantId),
+            criteria: 3,
+            userId: parseInt(consultant),
+            departmentId: parseInt(deptId),
+            scheduleId: parseInt(selectedSchedule)
+          }
+      }else{
+         dataOne = {
+          criteria: 1,
+          userId: parseInt(onCallOne),
+            departmentId: parseInt(deptId),
+            scheduleId: parseInt(selectedSchedule)
+        }
+           dataTwo = {
+            criteria: 2,
+            userId: parseInt(onCallTwo),
+            departmentId: parseInt(deptId),
+            scheduleId: parseInt(selectedSchedule)
+    
+          }
+           dataThree = {
+            criteria: 3,
+            userId: parseInt(consultant),
+            departmentId: parseInt(deptId),
+            scheduleId: parseInt(selectedSchedule)
+          }
+      }
+      
+      updateSchedules([dataOne, dataTwo, dataThree]);
 
       }
 
-     
+      async function updateSchedules(putData) {
+        try {
+          const updatePromises = putData.map(doctor =>
+            fetch('/api/assignments', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(doctor),
+            })
+          );
+          
+          // Execute all the requests concurrently
+          await Promise.all(updatePromises);
+          
+          alert('Schedule Saved!');
+        } catch (error) {
+          console.error('Error:', error);
+          alert('There was an error saving the schedule');
+        }
+      };
+      
 
-    const createSchedule = () => {
+      async function createSchedule() {
         setIsButtonDisabled(true); 
         setFormDisabled(false);
         console.log(selectedDate);
@@ -215,7 +252,7 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
           date:  selectedDate ,
         };
       
-        fetch('/api/schedules', {
+        await fetch('/api/schedules', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -225,13 +262,22 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
         .then(response => response.json())
         .then(data => {
           alert('Schedule saved successfully');
+          setSchedule(data.id);
         })
         .catch((error) => {
           console.error('Error:', error);
           alert('There was an error saving the schedule');
         });
-    }
-
+        const scheds = await fetch('http://localhost:3000/api/schedules');
+        const responsed = await scheds.json();
+        setSchedules(responsed);
+    };
+    useEffect(() => {
+      console.log(updatedSchedules);
+  }, [updatedSchedules]);
+  useEffect(() => {
+    console.log(selectedSchedule);
+}, [selectedSchedule]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const handleDeptChange = () => handleDataFill(selectedSchedule);
     function filterUsers(inputElementId, autocompleteListId, employeeFieldId) {
@@ -254,12 +300,12 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
       // Display filtered users in the autocomplete list
       matchedUsers.forEach(user => {
         const item = document.createElement('div');
-        item.textContent = user.id + " | "+ user.first_name + " " + user.last_name;
+        item.textContent = "#"+user.id + " | "+ user.first_name + " " + user.last_name;
         item.classList.value = ('autocomplete-item');
   
         // Add click event to autocomplete item
         item.addEventListener('click', function () {
-            employeeField.value = user.id + " | "+ user.first_name + " " + user.last_name + " | +974 " + user.phone; // Set input value to the selected user
+            employeeField.value = "#"+user.id + " | "+ user.first_name + " " + user.last_name + " | +974 " + user.phone; // Set input value to the selected user
             employeeField.classList.value = (user.id);      
             console.log(employeeField.classList.value); 
             autocompleteList.innerHTML = ''; // Clear the autocomplete list

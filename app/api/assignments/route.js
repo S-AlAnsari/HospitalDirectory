@@ -41,8 +41,13 @@ export async function GET(request) {
   
 }
 
+export async function POST(request) {
+  const schedule = await request.json();
+  const newSchedule = await repo.createAssignment(schedule);
+  return Response.json(newSchedule);
+}
 export async function PUT(request) {
   const schedule = await request.json();
-  const newSchedule = await repo.updateSchedule(schedule);
+  const newSchedule = await repo.updateAssignment(schedule);
   return Response.json(newSchedule);
 }
