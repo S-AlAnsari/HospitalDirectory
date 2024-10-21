@@ -47,6 +47,9 @@ export default function Numbers({ hospitals }) {
     const index = Number(id) % colors.length;
     return colors[index]; // Return the color from the array
   };  
+  async function logout() {
+    localStorage.clear();
+  }
     return (
       <>
         <Head>
@@ -56,37 +59,21 @@ export default function Numbers({ hospitals }) {
           <link rel="stylesheet" href="./styles/numbers.css" />
 
         </Head>
-    <nav>
-      <div className="nav">
-        <ul className="main-nav">
-          <li><a href="index.html">Home</a></li>
-          <div className="dropdown">
-              <button className="dropbtn">Papers
-                <i className="fa fa-caret-down"></i>
-              </button>
-              <div className="dropdown-content">
-                <a href="/submit-paper.html">Submit Papers</a>
-                <a href="/my-papers.html">My Paper</a>
-                <a href="/review-paper.html">Review Papers</a>
-                <a href="/reviewed-papers.html">My Reviews</a>
-              </div>
-            </div>
-            <div className="dropdown">
-              <button className="dropbtn">Schedule
-                <i className="fa fa-caret-down"></i>
-              </button>
-              <div className="dropdown-content">
-                <a href="/conference.html">Add/Edit Schedule</a>
-                <a href="/schedule.html">Check Schedule</a>
-              </div>
-            </div>
-            <li><a href="/statistics.html">Statistics</a></li>
-          <li><a href="login.html" className="log" onClick={() => logout()}></a></li>
-        </ul>
-      </div>
-    </nav>
-    <h1 style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)', color:"white" }}>Search by Hospital</h1>
-    <div id="papers" className="paper-container">
+        <nav>
+        <div class="nav">
+          <ul class="main-nav">
+          <li><a href="/hospitals">Hospital Directory</a></li>
+          <li><a href="/scheduler">Scheduler</a></li>
+          <li><a href="/profile">Edit Profile</a></li>
+            <li><a href="login.html" class="log" onClick={() => logout()}>Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+      <h1 style={{ textShadow: '4px 4px 8px rgba(0,0,0,0.7)', color:"white", margin:"1rem"}}>Search by Hospital</h1>
+
+    <div id="submit-paper" className="paper-container">
+    
+<div style={{display:"flex",flexDirection:"row",flexWrap:"wrap"}}>
     {hospitals.map((hospital) => (
   <div
   key={hospital.id}
@@ -108,7 +95,13 @@ export default function Numbers({ hospitals }) {
 </div>
 
 ))}
+</div>
     </div>
+    <footer style={{ }}>
+    <div id="submit-paper" className="paper-container" style={{minHeight:"0.5rem",maxHeight:"0.5rem",paddingTop:"0rem", bottom:"0px", position:"fixed"}}>
+      <p>Copyright @ 2024 | Salem Al-Ansari</p>
+</div>
+    </footer>
       </>
     );
   }
