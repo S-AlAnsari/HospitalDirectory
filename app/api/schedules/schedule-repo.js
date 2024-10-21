@@ -5,6 +5,33 @@ const prisma = new PrismaClient();
 
 export default class SchedulesRepo {
   constructor() {}
+  async getSchedulesByDate(date) {
+    try {
+        // Format the date to just the date string
+        const dateString = date.toISOString().split('T')[0]; // "YYYY-MM-DD"
+
+        return await prisma.schedule.findMany({
+            where: {
+                // Use `startsWith` to check the date part of the timestamp
+                date: {
+                    gte: new Date(dateString), // Start from the beginning of the date
+                    lt: new Date(new Date(dateString).setDate(new Date(dateString).getDate() + 1)) // Until the start of the next day
+                },
+            },
+            include: {
+                assignments: {
+                    include: {
+                        user: true, // Include user information related to assignments
+                        department: true,
+                    },
+                },
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        process.exit(1);
+    }
+}
   async getSchedule() {
     try {
       return await prisma.schedule.findMany({

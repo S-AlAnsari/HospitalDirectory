@@ -18,6 +18,17 @@ export async function getServerSideProps({ params }) {
     };
   }
   export default function Department({ departments }) {
+    const circularGradients = [
+      'radial-gradient(circle, #6a82fb 0%, #fc5c7d 100%)', // Blue to Pink
+      'radial-gradient(circle, #00c6ff 0%, #0072ff 100%)', // Bright Blue
+      'radial-gradient(circle, #f75c5e 0%, #e81013 100%)', // Bright Red to Orange
+      'radial-gradient(circle, #00d2ff 0%, #3a7bd5 100%)', // Light Blue to Dark Blue
+      'radial-gradient(circle, #f9d423 0%, #ff4e50 100%)', // Yellow to Red
+      'radial-gradient(circle, #3bcb9c 0%, #0abfbc 100%)', // Bright Green to Teal
+      'radial-gradient(circle, #8e2de2 0%, #4a00e0 100%)', // Purple to Dark Purple
+      'radial-gradient(circle, #ffafbd 0%, #ffc3a0 100%)', // Soft Pink to Peach
+      'radial-gradient(circle, #ff758c 0%, #ff7eb3 100%)', // Pink to Light Pink
+    ];
     return (
         <>
         <Head>

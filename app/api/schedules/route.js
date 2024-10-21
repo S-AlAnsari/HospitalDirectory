@@ -2,7 +2,17 @@ import SchedulesRepo from "./schedule-repo";
 const repo = new SchedulesRepo();
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  let schedules = await repo.getSchedule();
+  const dateParam = searchParams.get('date'); // Get the date parameter from the query
+
+  let schedules;
+
+  if (dateParam) {
+      // If a date is provided, fetch schedules for that date
+      schedules = await repo.getSchedulesByDate(new Date(dateParam));
+  } else {
+      // If no date is provided, fetch all schedules
+      schedules = await repo.getSchedule();
+  }
 
   return Response.json(schedules);
 }

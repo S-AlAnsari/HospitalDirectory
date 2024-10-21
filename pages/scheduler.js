@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState} from 'react';
+import { useRouter } from 'next/router';
+
 let users = [];
 export async function getServerSideProps() {
   const response = await fetch('http://localhost:3000/api/schedules'); // Use your actual API endpoint
@@ -55,6 +57,7 @@ function filterUsers() {
 }
 export default function Scheduler({ schedules, users, hospitals, departments, assignments}) {
     let scheduleId;
+    const router = useRouter();
     // Optional: Add any JavaScript logic (e.g., handling dates, input)
     
     // Update minimum date for the date picker dynamically
@@ -66,14 +69,31 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
     const [selectedDate, setSelectedDate] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true); 
     const [isFormDisabled, setFormDisabled] = useState(true);
-    const [oldH, setHospitals] = useState([]);  // To store hospitals data
+    const [ls, setLocalStorage] = useState(null);  // To store hospitals data
     const [filteredDepartments, setDepartments] = useState([]); // To store departments data
     const [selectedHospital, setSelectedHospital] = useState(''); // Selected hospital
     const [selectedSchedule, setSchedule] = useState(); // Selected hospital
     const [updatedSchedules, setSchedules] = useState(schedules); // Selected hospital
     const [updatedAssignemnts, setAssignments] = useState(assignments); // Selected hospital
 
+   
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     // This ensures `localStorage` is accessed on the client side
+  //     const savedValue = window.localStorage.getItem("user");
+  //     setLocalStorage(savedValue ? JSON.parse(savedValue) : null);
+  //   }
+  // }, []);
 
+  // useEffect(() => {
+  //   // Check if `ls` is not null to handle redirection
+  //     console.log("NOT NULL")
+  //     console.log(ls);
+  //     const user = ls;
+  //     if (!ls || !user || user.first_name !== "John") {
+  //       router.push("/hospitals");
+  //     }
+  // }, [ls, router]);
 
     useEffect(() => {
         async function fetchHospitalsAndDepartments() {
@@ -268,7 +288,7 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
           console.error('Error:', error);
           alert('There was an error saving the schedule');
         });
-        const scheds = await fetch('http://129.151.142.208:3000/api/schedules');
+        const scheds = await fetch('http://localhost:3000/api/schedules');
         const responsed = await scheds.json();
         setSchedules(responsed);
     };
@@ -315,6 +335,19 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
         autocompleteList.appendChild(item);
       });
     };
+    // if (ls === null) {
+    //   // window.location = window.location.href.replace(
+    //   //   "scheduler",
+    //   //   "hospitals"
+    //   // );
+    // } else {
+    //   const user = JSON.parse(ls);
+    //   if (user.role != "admin") {
+    //     // window.location = window.location.href.replace(
+    //     //   "scheduler",
+    //     //   "hospitals"
+    //     // );
+    //   } else {
     return (
       <>
         <Head>

@@ -13,3 +13,8 @@ export async function GET(request) {
         return Response.error(error)
     }
 }
+export async function PUT(request) {
+    const user = await request.json();
+    const newUser = await repo.updateUser(user);
+    return Response.json(newUser);
+  }

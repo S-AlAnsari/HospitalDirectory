@@ -1,22 +1,32 @@
 import Head from 'next/head';
 let id;
 export async function getServerSideProps({ params }) {
-    const { scheduleId } = params; // Get the hospital ID from the URL parameters
-    const response = await fetch(`http://localhost:3000/api/assignments?departmentId=${scheduleId}`); // Fetch hospital details from your API
-    const assignments = await response.json();
-    // Handle case when hospital is not found
-    if (!assignments) {
+  const { scheduleId } = params; // Get the scheduleId from the URL parameters
+
+  // Create a date object in UTC and adjust to Qatar time (UTC+3)
+  const qatarDate = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Qatar" }));
+  qatarDate.setDate(qatarDate.getDate() + 1);
+  // Format the date to 'YYYY-MM-DD'
+  const formattedDate = qatarDate.toISOString().split('T')[0];
+
+  // Fetch schedules based on yesterday's date
+  const response = await fetch(`http://localhost:3000/api/schedules?date=${formattedDate}`);
+  const schedules = await response.json();
+
+  // Handle case when schedules are not found
+  if (!schedules || schedules.length === 0) {
       return {
-        notFound: true,
+          notFound: true,
       };
-    }
-  
-    return {
-      props: {
-        assignments,
-      },
-    };  
   }
+
+  return {
+      props: {
+          schedules,
+          scheduleId,
+      },
+  };  
+}
   const getCriteriaName = (criteria) => {
     switch (criteria) {
       case 1:
@@ -29,7 +39,8 @@ export async function getServerSideProps({ params }) {
         return 'Unknown Criteria';
     }
   };
-  export default function Department({ assignments }) {
+  export default function Department({ schedules, scheduleId}) {
+    const assignments = schedules[0].assignments.filter((assignment) => assignment.departmentId == scheduleId)
     return (
         <>
         <Head>
