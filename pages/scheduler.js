@@ -288,7 +288,7 @@ export default function Scheduler({ schedules, users, hospitals, departments, as
           console.error('Error:', error);
           alert('There was an error saving the schedule');
         });
-        const scheds = await fetch('http://localhost:3000/api/schedules');
+        const scheds = await fetch('http://129.151.142.208:3000/api/schedules');
         const responsed = await scheds.json();
         setSchedules(responsed);
     };
