@@ -86,40 +86,41 @@ font-size: large;
 }
 
 .nav {
-display: flex;
-flex-direction: row;
-border-bottom: 4px grey solid;
-background-color: whitesmoke;
-box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-margin: -0.5rem;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 4px grey solid;
+  background-color: whitesmoke;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  /* margin: -0.5rem; */
 }
 
 .nav h1 {
-margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 a {
-text-decoration: none;
-color: rgb(71, 71, 71);
+  text-decoration: none;
+  color: rgb(71, 71, 71);
 
 }
 
 
-.nav ul {
-display: flex;
-flex-direction: row;
-list-style: none;
-margin-left: auto;
+ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin-left: auto;
+  margin: auto;
 }
 
-.nav li {
-margin: 1rem;
+li {
+  margin: 1rem;
 }
 
 a:hover {
-border-bottom: 2px rgb(0, 251, 251) solid;
-transition: 0.25s;
-color: grey;
+  border-bottom: 2px rgb(0, 251, 251) solid;
+  transition: 0.25s;
+  color: grey;
 }
 .dropdown {
 float: left;

@@ -29,6 +29,9 @@ export async function getServerSideProps({ params }) {
       'radial-gradient(circle, #ffafbd 0%, #ffc3a0 100%)', // Soft Pink to Peach
       'radial-gradient(circle, #ff758c 0%, #ff7eb3 100%)', // Pink to Light Pink
     ];
+    async function logout() {
+      localStorage.clear();
+    };
     return (
         <>
         <Head>
@@ -39,46 +42,47 @@ export async function getServerSideProps({ params }) {
           <link rel="stylesheet" href="/styles/numbers.css" />
 
         </Head>
-    <nav>
-      <div className="nav">
-        <ul className="main-nav">
-          <li><a href="index.html">Home</a></li>
-          <div className="dropdown">
-              <button className="dropbtn">Papers
-                <i className="fa fa-caret-down"></i>
-              </button>
-              <div className="dropdown-content">
-                <a href="/submit-paper.html">Submit Papers</a>
-                <a href="/my-papers.html">My Paper</a>
-                <a href="/review-paper.html">Review Papers</a>
-                <a href="/reviewed-papers.html">My Reviews</a>
-              </div>
-            </div>
-            <div className="dropdown">
-              <button className="dropbtn">Schedule
-                <i className="fa fa-caret-down"></i>
-              </button>
-              <div className="dropdown-content">
-                <a href="/conference.html">Add/Edit Schedule</a>
-                <a href="/schedule.html">Check Schedule</a>
-              </div>
-            </div>
-            <li><a href="/statistics.html">Statistics</a></li>
-          <li><a href="login.html" className="log" onClick={() => logout()}></a></li>
-        </ul>
-      </div>
-    </nav>
-    <h1>Search by Hospital</h1>
-    <div className="card" onClick={() => (location.href = `/hospitals/`)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', textAlign: 'center', maxWidth: "2.5rem", minWidth: "2.5rem", maxHeight:"2.5rem", minHeight:"2.5rem"}}>
-    <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+        <nav>
+        <div class="nav">
+          <ul class="main-nav">
+          <li><a href="/hospitals">Hospital Directory</a></li>
+          <li><a href="/scheduler">Scheduler</a></li>
+          <li><a href="/profile">Edit Profile</a></li>
+            <li><a href="login.html" class="log" onClick={() => logout()}>Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    <div id="submit-paper" className="paper-container" style={{padding:"0rem", width:"20rem"}}>
+      <h1 style={{ textShadow: '1px 0.5px 5px rgba(0,0,0,0.7)', color:"white", margin:"1rem"}}>Departments</h1>
+    </div>
+    <div id="submit-paper" className="paper-container">
+    <div className="card" onClick={() => (location.href = `/hospitals/`)} style={{backgroundImage: circularGradients[2], cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', textAlign: 'center', maxWidth: "2.5rem", minWidth: "2.5rem", maxHeight:"2.5rem", minHeight:"2.5rem"}}>
+    <i className="fa fa-arrow-left fa-2x" aria-hidden="true" style={{color:"white"}}></i>
             </div>
     <div id="papers" className="paper-container">
           {departments.map((department) => (
-            <div key={department.id} className="card" onClick={() => (location.href = `/assignments/${department.id}`)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row', alignItems: 'center', textAlign: 'center' }}>
+            <div key={department.id} className="card" onClick={() => (location.href = `/assignments/${department.id}`)}
+            style={{
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              textAlign: 'center',
+              position: 'relative', // Enable positioning for pseudo-element
+              overflow: 'hidden', // Prevent overflow for pseudo-element
+              backgroundImage: circularGradients[((department.id+7) % circularGradients.length)], // Apply circular gradient
+              color: 'white', // Text color for visibility
+            }}>
               <h1>{department.name}</h1>
             </div>
           ))}
+          </div>
     </div>
+    <footer style={{ }}>
+    <div id="submit-paper" className="paper-container" style={{minHeight:"0.5rem",maxHeight:"0.5rem",paddingTop:"0rem", bottom:"0px", position:"fixed"}}>
+      <p>Copyright @ 2024 | Salem Al-Ansari</p>
+</div>
+    </footer>
       </>
     );
   }

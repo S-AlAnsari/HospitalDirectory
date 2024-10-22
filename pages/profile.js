@@ -190,6 +190,9 @@ function filterUsers() {
         document.getElementById("emp-phone").value = "(+974) "+user.phone;
 
     };
+    async function logout() {
+      localStorage.clear();
+    };
     return (
       <>
         <Head>
@@ -197,6 +200,16 @@ function filterUsers() {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="stylesheet" href="./styles/scheduler.css" />
         </Head>
+        <nav>
+        <div class="nav">
+          <ul class="main-nav">
+          <li><a href="/hospitals">Hospital Directory</a></li>
+          <li><a href="/scheduler">Scheduler</a></li>
+          <li><a href="/profile">Edit Profile</a></li>
+            <li><a href="login.html" class="log" onClick={() => logout()}>Logout</a></li>
+          </ul>
+        </div>
+      </nav>
         <div style={{height:"100%"}}>
         <div className="container" style={{minWidth:"30rem"}}>
         <form id="submit-paper" action="">
@@ -300,6 +313,11 @@ function filterUsers() {
         </div>
         
         </div>
+        <footer style={{ }}>
+    <div id="submit-paper" className="paper-container" style={{maxWidth:"20rem",padding:"0rem", bottom:"0px", position:"fixed"}}>
+      <p>Copyright @ 2024 | Salem Al-Ansari</p>
+</div>
+    </footer>
       </>
     );
   }

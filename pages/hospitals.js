@@ -69,8 +69,9 @@ export default function Numbers({ hospitals }) {
           </ul>
         </div>
       </nav>
-      <h1 style={{ textShadow: '4px 4px 8px rgba(0,0,0,0.7)', color:"white", margin:"1rem"}}>Search by Hospital</h1>
-
+      <div id="submit-paper" className="paper-container" style={{padding:"0rem", width:"20rem"}}>
+      <h1 style={{ textShadow: '1px 0.5px 5px rgba(0,0,0,0.7)', color:"white", margin:"1rem"}}>Search by Hospital</h1>
+    </div>
     <div id="submit-paper" className="paper-container">
     
 <div style={{display:"flex",flexDirection:"row",flexWrap:"wrap"}}>

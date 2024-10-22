@@ -60,17 +60,20 @@ async function checkLogin() {
 
 async function redirecting() {
   const user = JSON.parse(localStorage.user);
-  console.log(user.role);
-  if (user.role == "author") {
-    window.location = window.location.href.replace(
-      "login.html",
-      "submit-paper.html"
-    );
-  }
-  if (user.role == "reviewer") {
-    window.location = window.location.href.replace(
-      "login.html",
-      "review-paper.html"
-    );
-  }
+  // console.log(user.role);
+  // if (user.role == "author") {
+  //   window.location = window.location.href.replace(
+  //     "login.html",
+  //     "submit-paper.html"
+  //   );
+  // }
+  // if (user.role == "reviewer") {
+  //   window.location = window.location.href.replace(
+  //     "login.html",
+  //     "review-paper.html"
+  //   );
+  // }
+  setTimeout(function () {
+  window.location.href = 'hospitals';
+  },1000);
 }

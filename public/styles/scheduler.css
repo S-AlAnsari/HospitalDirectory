@@ -412,17 +412,33 @@
     background-color: #e9e9e9;
   }
   @media screen and (max-width:768px) {
+    /* #doctor{
+      
+      max-width: 30rem;
+    } */
+    /* input {
+      padding: 10px;
+      margin-top: 1rem;
+      width: 15rem;
+      font-size: 17px;
+      font-family: Raleway;
+      border: 1px solid #aaaaaa;
+      margin-bottom: 1rem;
+    }
+    .autocomplete-list {
+      width: 18rem;
+    } */
     .progress-bar {
       display: flex;
       font-size: xx-small;
       justify-content: center;
       flex-direction: column;
-      width: 50vh;
+      width: 5vh;
 
     }
 
     #submit-paper {
-      width: 50vh;
+      width: 23rem;
       margin: 0;
       
     }
